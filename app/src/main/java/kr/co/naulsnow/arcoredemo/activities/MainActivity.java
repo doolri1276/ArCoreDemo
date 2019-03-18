@@ -89,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
                     BaseTool.log(TAG, BaseTool.toJson(result));
 
                     for(int i=0;i<result.getFurnitureItemList().size();i++){
+
+                        if(i==0){
+                            ivPreview.setVisibility(View.VISIBLE);
+                            Glide.with(MainActivity.this).load(result.getFurnitureItemList().get(i).getImageUrl()).into(ivPreview);
+                        }
+
                         FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, result.getFurnitureItemList().get(i)));
                     }
 

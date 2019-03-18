@@ -18,9 +18,6 @@
             android:layout_height="match_parent"/>
 
 
-
-
-
     </FrameLayout>
 
     <ImageView
@@ -39,6 +36,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:scaleType="centerCrop"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
         android:src="@drawable/fur01"/>
