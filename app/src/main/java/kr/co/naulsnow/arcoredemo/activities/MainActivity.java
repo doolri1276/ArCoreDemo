@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.ar.core.Anchor;
@@ -22,6 +24,7 @@ import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.BaseArFragment;
 
 import kr.co.naulsnow.arcoredemo.R;
+import kr.co.naulsnow.arcoredemo.adapters.FurnitureListAdapter;
 import kr.co.naulsnow.arcoredemo.models.FurnitureItem;
 import kr.co.naulsnow.arcoredemo.singletons.FurnitureHelper;
 import kr.co.naulsnow.arcoredemo.tools.BaseTool;
@@ -45,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
     //// 기본 ///////////////
     ImageView ivCart, ivPreview;
 
+    //// 메뉴 ////
+    LinearLayout llMenu;
+    ImageView ivBack;
+    RecyclerView rvChairs;
+    FurnitureListAdapter furnitureListAdapter;
+
 
 
     @Override
@@ -56,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setUpModels();
         setArFragment();
         setViews();
+        setAdapters();
         setListeners();
     }
 
@@ -96,16 +106,40 @@ public class MainActivity extends AppCompatActivity {
     private void setViews(){
         ivCart = findViewById(R.id.iv_cart);
         ivPreview = findViewById(R.id.iv_preview);
+
+        llMenu = findViewById(R.id.ll_menu);
+        ivBack = findViewById(R.id.iv_back);
+        rvChairs = findViewById(R.id.rv_chairs);
     }
 
     private void setListeners() {
         ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovingTool.goToFurnitureSelectActivityForResult(MainActivity.this, Data.RESULT_SELECT_FURNITURE);
+//                MovingTool.goToFurnitureSelectActivityForResult(MainActivity.this, Data.RESULT_SELECT_FURNITURE);
+                llMenu.setVisibility(View.VISIBLE);
             }
         });
 
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llMenu.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void setAdapters(){
+
+        if(furnitureListAdapter == null){
+            furnitureListAdapter = new FurnitureListAdapter(MainActivity.this, new FurnitureListAdapter.OnClickFurnitureInterface() {
+                @Override
+                public void onClick(int index) {
+                    selectChair(index);
+                }
+            });
+            rvChairs.setAdapter(furnitureListAdapter);
+        }
     }
 
     @Override
@@ -164,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
         if(data.hasExtra(Data.BUNDLE_INDEX)){
             int index = data.getIntExtra(Data.BUNDLE_INDEX, 0);
 
+            selectChair(index);
+
             if(selected == index)
                 return;
 
@@ -171,6 +207,15 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(this).load(FurnitureHelper.getInstance().getFurnitureList().get(selected).getImageRid()).into(ivPreview);
 
         }
+    }
+
+    private void selectChair(int index){
+        if(selected == index)
+            return;
+
+        selected=index;
+        llMenu.setVisibility(View.GONE);
+        Glide.with(this).load(FurnitureHelper.getInstance().getFurnitureList().get(selected).getImageRid()).into(ivPreview);
     }
 
 }

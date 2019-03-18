@@ -43,4 +43,72 @@
         android:layout_margin="20dp"
         android:src="@drawable/fur01"/>
 
+    <LinearLayout
+        android:id="@+id/ll_menu"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="#ffffff"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_bar_arrow_left"
+                android:padding="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="가구 둘러보기"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="3dp"
+            android:background="#efefef"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textSize="12sp"
+            android:textColor="#444444"
+            android:text="의자들"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="3dp"
+            android:background="#efefef"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_chairs"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem = "@layout/item_furniture_list"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
 </RelativeLayout>
