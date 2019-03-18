@@ -1,6 +1,7 @@
 package kr.co.naulsnow.arcoredemo.models;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import kr.co.naulsnow.arcoredemo.R;
 public class FurnitureItem {
 
     private int imageRid;
+    private String imageUrl;
     private ViewRenderable viewRenderable;
     private ModelRenderable modelRenderable;
     private int price;
@@ -44,6 +46,52 @@ public class FurnitureItem {
         this.price = price;
         this.name = name;
     }
+
+    public FurnitureItem(Context context, int imageRid, String modelRenderableURL, int price, String name) {
+
+        ModelRenderable.builder()
+                .setSource(context, Uri.parse(modelRenderableURL))
+                .build().thenAccept(renderable -> modelRenderable = renderable)
+                .exceptionally(
+                        throwable-> {
+                            Toast.makeText(context, "Unable to load bear model", Toast.LENGTH_SHORT).show();
+                            return null;
+                        }
+                );
+
+        ViewRenderable.builder()
+                .setView(context, R.layout.item_furniture_info)
+                .build()
+                .thenAccept( renderable -> viewRenderable = renderable);
+
+        this.imageRid = imageRid;
+        this.price = price;
+        this.name = name;
+    }
+
+    public FurnitureItem(Context context, String imageUrl, String modelRenderableURL, int price, String name) {
+
+        ModelRenderable.builder()
+                .setSource(context, Uri.parse(modelRenderableURL))
+                .build().thenAccept(renderable -> modelRenderable = renderable)
+                .exceptionally(
+                        throwable-> {
+                            Toast.makeText(context, "Unable to load bear model", Toast.LENGTH_SHORT).show();
+                            return null;
+                        }
+                );
+
+        ViewRenderable.builder()
+                .setView(context, R.layout.item_furniture_info)
+                .build()
+                .thenAccept( renderable -> viewRenderable = renderable);
+
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.name = name;
+    }
+
+
 
     public void createModel(AnchorNode anchorNode, TransformationSystem transformationSystem){
 
@@ -81,6 +129,10 @@ public class FurnitureItem {
 
     public int getImageRid() {
         return imageRid;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public int getPrice() {

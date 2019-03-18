@@ -40,7 +40,7 @@ public class FurnitureListAdapter extends RecyclerView.Adapter<FurnitureListAdap
         FurnitureItem item = FurnitureHelper.getInstance().getFurnitureList().get(i);
 
         //이미지
-        Glide.with(context).load(item.getImageRid()).into(viewHolder.ivImage);
+        Glide.with(context).load(item.getImageUrl()==null?item.getImageRid():item.getImageUrl()).into(viewHolder.ivImage);
 
         //이름
         viewHolder.tvName.setText(item.getName());

@@ -30,7 +30,6 @@ import kr.co.naulsnow.arcoredemo.singletons.FurnitureHelper;
 import kr.co.naulsnow.arcoredemo.tools.BaseTool;
 import kr.co.naulsnow.arcoredemo.tools.CameraPermissionHelper;
 import kr.co.naulsnow.arcoredemo.tools.Data;
-import kr.co.naulsnow.arcoredemo.tools.MovingTool;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
 
         //여기서 리스트 만들어야함
         for(int i=0;i<5;i++){
-            FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, R.drawable.fur01+i, R.raw.fur01+i, 1000*(i+1), "의자"+i+"번"));
+//            if(i==0)
+                FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, R.drawable.fur01+i, "http://snownaul2.dothome.co.kr/ar/fur0"+(i+1)+".sfb", 1000*(i+1), "의자"+i+"번"));
+//            else
+//                FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, R.drawable.fur01+i, R.raw.fur01+i, 1000*(i+1), "의자"+i+"번"));
         }
     }
 
@@ -204,7 +206,10 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
             selected=index;
-            Glide.with(this).load(FurnitureHelper.getInstance().getFurnitureList().get(selected).getImageRid()).into(ivPreview);
+
+            FurnitureItem item = FurnitureHelper.getInstance().getFurnitureList().get(selected);
+
+            Glide.with(this).load(item.getImageUrl()==null?item.getImageRid():item.getImageUrl()).into(ivPreview);
 
         }
     }
@@ -215,7 +220,10 @@ public class MainActivity extends AppCompatActivity {
 
         selected=index;
         llMenu.setVisibility(View.GONE);
-        Glide.with(this).load(FurnitureHelper.getInstance().getFurnitureList().get(selected).getImageRid()).into(ivPreview);
+
+        FurnitureItem item = FurnitureHelper.getInstance().getFurnitureList().get(selected);
+
+        Glide.with(this).load(item.getImageUrl()==null?item.getImageRid():item.getImageUrl()).into(ivPreview);
     }
 
 }
