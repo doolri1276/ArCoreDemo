@@ -15,6 +15,7 @@ import com.google.ar.sceneform.ux.TransformableNode;
 import com.google.ar.sceneform.ux.TransformationSystem;
 
 import kr.co.naulsnow.arcoredemo.R;
+import kr.co.naulsnow.arcoredemo.result.FurnitureResult;
 
 public class FurnitureItem {
 
@@ -24,6 +25,28 @@ public class FurnitureItem {
     private ModelRenderable modelRenderable;
     private int price;
     private String name;
+
+    public FurnitureItem(Context context, FurnitureResult.FurnitureItem furnitureItem){
+        imageUrl=furnitureItem.getImageUrl();
+
+        ModelRenderable.builder()
+                .setSource(context, Uri.parse(furnitureItem.getModelUrl()))
+                .build().thenAccept(renderable -> modelRenderable = renderable)
+                .exceptionally(
+                        throwable-> {
+                            Toast.makeText(context, "Unable to load bear model", Toast.LENGTH_SHORT).show();
+                            return null;
+                        }
+                );
+
+        ViewRenderable.builder()
+                .setView(context, R.layout.item_furniture_info)
+                .build()
+                .thenAccept( renderable -> viewRenderable = renderable);
+
+        price = furnitureItem.getPrice();
+        name=furnitureItem.getName();
+    }
 
     public FurnitureItem(Context context, int imageRid, int modelRenderableRid, int price, String name) {
 

@@ -26,10 +26,16 @@ import com.google.ar.sceneform.ux.BaseArFragment;
 import kr.co.naulsnow.arcoredemo.R;
 import kr.co.naulsnow.arcoredemo.adapters.FurnitureListAdapter;
 import kr.co.naulsnow.arcoredemo.models.FurnitureItem;
+import kr.co.naulsnow.arcoredemo.network.FurnitureApi;
+import kr.co.naulsnow.arcoredemo.network.NetworkManager;
+import kr.co.naulsnow.arcoredemo.result.FurnitureResult;
 import kr.co.naulsnow.arcoredemo.singletons.FurnitureHelper;
 import kr.co.naulsnow.arcoredemo.tools.BaseTool;
 import kr.co.naulsnow.arcoredemo.tools.CameraPermissionHelper;
 import kr.co.naulsnow.arcoredemo.tools.Data;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,11 +67,45 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //초기셋팅
-        setUpModels();
+
+//        setUpModels();
         setArFragment();
         setViews();
         setAdapters();
         setListeners();
+        setData();
+    }
+
+    private void setData(){
+
+        Call<FurnitureResult> api = NetworkManager.getInstance().getRetrofit().create(FurnitureApi.class).getAllFurnitures();
+
+        api.enqueue(new Callback<FurnitureResult>() {
+            @Override
+            public void onResponse(Call<FurnitureResult> call, Response<FurnitureResult> response) {
+                if(response.isSuccessful()){
+                    FurnitureResult result = response.body();
+
+                    BaseTool.log(TAG, BaseTool.toJson(result));
+
+                    for(int i=0;i<result.getFurnitureItemList().size();i++){
+                        FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, result.getFurnitureItemList().get(i)));
+                    }
+
+                    if(furnitureListAdapter!=null)
+                        furnitureListAdapter.notifyDataSetChanged();
+
+                }else{
+                    BaseTool.error(TAG, "isNotSuccessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FurnitureResult> call, Throwable t) {
+                BaseTool.error(TAG, t.getMessage());
+            }
+        });
+
     }
 
     private void setUpModels(){
@@ -73,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         //여기서 리스트 만들어야함
         for(int i=0;i<5;i++){
 //            if(i==0)
-                FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, R.drawable.fur01+i, "http://snownaul2.dothome.co.kr/ar/fur0"+(i+1)+".sfb", 1000*(i+1), "의자"+i+"번"));
+//                FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, R.drawable.fur01+i, "http://snownaul2.dothome.co.kr/ar/fur0"+(i+1)+".sfb", 1000*(i+1), "의자"+i+"번"));
 //            else
 //                FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, R.drawable.fur01+i, R.raw.fur01+i, 1000*(i+1), "의자"+i+"번"));
         }

@@ -12,6 +12,8 @@ import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class BaseTool {
 
@@ -76,5 +78,13 @@ public class BaseTool {
             Log.e(TAG, "Exception: " + sessionException);
         }
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Json형식을 이쁘게 프린트 해줍니다.
+     * */
+    public static String toJson(Object obj){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(obj);
     }
 }
