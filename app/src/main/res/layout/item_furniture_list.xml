@@ -9,7 +9,7 @@
         android:id="@+id/iv_iamge"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
-        android:src="@drawable/fur01"/>
+        />
 
     <TextView
         android:id="@+id/tv_name"

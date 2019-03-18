@@ -46,28 +46,3 @@ dependencies {
 
 }
 
-
-sceneform.asset('sampledata/models/fur01.fbx',
-        'default',
-        'sampledata/models/fur01.sfa',
-        'src/main/res/raw/fur01')
-
-sceneform.asset('sampledata/models/fur02.fbx',
-        'default',
-        'sampledata/models/fur02.sfa',
-        'src/main/res/raw/fur02')
-
-sceneform.asset('sampledata/models/fur03.fbx',
-        'default',
-        'sampledata/models/fur03.sfa',
-        'src/main/res/raw/fur03')
-
-sceneform.asset('sampledata/models/fur04.FBX',
-        'default',
-        'sampledata/models/fur04.sfa',
-        'src/main/res/raw/fur04')
-
-sceneform.asset('sampledata/models/fur05.fbx',
-        'default',
-        'sampledata/models/fur05.sfa',
-        'src/main/res/raw/fur05')

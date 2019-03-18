@@ -40,7 +40,7 @@
         tools:visibility="visible"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
-        android:src="@drawable/fur01"/>
+        />
 
     <LinearLayout
         android:id="@+id/ll_menu"
