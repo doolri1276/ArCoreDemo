@@ -11,11 +11,13 @@ import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
+import com.google.ar.sceneform.ux.FootprintSelectionVisualizer;
 import com.google.ar.sceneform.ux.TransformableNode;
 import com.google.ar.sceneform.ux.TransformationSystem;
 
 import kr.co.naulsnow.arcoredemo.R;
 import kr.co.naulsnow.arcoredemo.result.FurnitureResult;
+import kr.co.naulsnow.arcoredemo.singletons.FurnitureHelper;
 
 public class FurnitureItem {
 
@@ -25,8 +27,11 @@ public class FurnitureItem {
     private ModelRenderable modelRenderable;
     private int price;
     private String name;
+    private Context context;
 
-    public FurnitureItem(Context context, FurnitureResult.FurnitureItem furnitureItem){
+    OnDetachNode onDetachNode;
+
+    public FurnitureItem(Context context, FurnitureResult.FurnitureItem furnitureItem, OnDetachNode onDetachNode){
         imageUrl=furnitureItem.getImageUrl();
 
         ModelRenderable.builder()
@@ -44,8 +49,10 @@ public class FurnitureItem {
                 .build()
                 .thenAccept( renderable -> viewRenderable = renderable);
 
+        this.context = context;
         price = furnitureItem.getPrice();
         name=furnitureItem.getName();
+        this.onDetachNode = onDetachNode;
     }
 
     public FurnitureItem(Context context, int imageRid, int modelRenderableRid, int price, String name) {
@@ -118,8 +125,11 @@ public class FurnitureItem {
 
     public void createModel(AnchorNode anchorNode, TransformationSystem transformationSystem){
 
-        TransformableNode transformableNode = new TransformableNode(transformationSystem);
+        FurnitureHelper.getInstance().getSelectedFurnitureList().add(this);
 
+        TransformableNode transformableNode = new TransformableNode(transformationSystem);
+//        TransformationSystem transformationSystem1 = new TransformationSystem(context.getResources().getDisplayMetrics(), new FootprintSelectionVisualizer());
+//        TransformableNode transformableNode = new TransformableNode(transformationSystem1);
         transformableNode.setRenderable(modelRenderable);
         transformableNode.getScaleController().setMinScale(0.2f);
         transformableNode.getScaleController().setMaxScale(1f);
@@ -141,7 +151,8 @@ public class FurnitureItem {
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anchorNode.setParent(null);
+                onDetachNode.onDetach(FurnitureHelper.getInstance().getSelectedFurnitureList().indexOf(FurnitureItem.this), anchorNode);
+//                anchorNode.setParent(null);
             }
         });
 
@@ -164,5 +175,9 @@ public class FurnitureItem {
 
     public String getName() {
         return name;
+    }
+
+    public interface OnDetachNode{
+        void onDetach(int index, AnchorNode anchorNode);
     }
 }

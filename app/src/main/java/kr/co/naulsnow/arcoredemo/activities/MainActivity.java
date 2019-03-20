@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.ar.core.Anchor;
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     int selected;
 
     //// 기본 ///////////////
-    ImageView ivCart, ivPreview;
+    ImageView ivShop, ivCart, ivPreview;
+    TextView tvCartNum;
 
     //// 메뉴 ////
     LinearLayout llMenu;
@@ -95,7 +97,14 @@ public class MainActivity extends AppCompatActivity {
                             Glide.with(MainActivity.this).load(result.getFurnitureItemList().get(i).getImageUrl()).into(ivPreview);
                         }
 
-                        FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, result.getFurnitureItemList().get(i)));
+                        FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, result.getFurnitureItemList().get(i), new FurnitureItem.OnDetachNode() {
+                            @Override
+                            public void onDetach(int index, AnchorNode anchorNode) {
+                                anchorNode.setParent(null);
+                                FurnitureHelper.getInstance().getSelectedFurnitureList().remove(index);
+                                setCartNum();
+                            }
+                        }));
                     }
 
                     if(furnitureListAdapter!=null)
@@ -139,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
                 FurnitureHelper.getInstance().getFurnitureList().get(selected).createModel(anchorNode, arFragment.getTransformationSystem());
 
+                setCartNum();
+
 //                createModel(anchorNode, selected);
             }
         });
@@ -151,17 +162,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setViews(){
-        ivCart = findViewById(R.id.iv_cart);
-        ivPreview = findViewById(R.id.iv_preview);
+    private void setCartNum(){
+        int num = FurnitureHelper.getInstance().getSelectedFurnitureList().size();
+        tvCartNum.setText(num+"");
 
+        if(num==0){
+            tvCartNum.setVisibility(View.GONE);
+        }else{
+            tvCartNum.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setViews(){
+        ivShop = findViewById(R.id.iv_shop);
+        ivPreview = findViewById(R.id.iv_preview);
+        ivCart = findViewById(R.id.iv_cart);
+        tvCartNum = findViewById(R.id.tv_cart_num);
         llMenu = findViewById(R.id.ll_menu);
         ivBack = findViewById(R.id.iv_back);
         rvChairs = findViewById(R.id.rv_chairs);
     }
 
     private void setListeners() {
-        ivCart.setOnClickListener(new View.OnClickListener() {
+        ivShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                MovingTool.goToFurnitureSelectActivityForResult(MainActivity.this, Data.RESULT_SELECT_FURNITURE);
