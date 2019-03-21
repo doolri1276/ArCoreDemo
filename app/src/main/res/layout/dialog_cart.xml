@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/root_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="16.5dp"
+            android:paddingEnd="16.5dp"
+            android:src="@drawable/ic_close"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="장바구니"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:textSize="14sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="선택된 결재 금액"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="12sp"
+                android:text="210,000원"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv"
+        android:layout_below="@id/root_appbar"
+        android:layout_width="match_parent"
+        android:paddingBottom="65dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/item_cart"/>
+            <include layout="@layout/item_cart"/>
+            <include layout="@layout/item_cart"/>
+            <include layout="@layout/item_cart"/>
+            <include layout="@layout/item_cart"/>
+            <include layout="@layout/item_cart"/>
+            <include layout="@layout/item_cart"/>
+            <include layout="@layout/item_cart"/>
+            <include layout="@layout/item_cart"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                tools:listitem="@layout/item_cart"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_btn_area"
+        android:orientation="horizontal"
+        android:layout_alignBottom="@id/nsv"
+        android:layout_width="match_parent"
+        android:padding="6dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/s_rect_rad_border_red"
+            android:text="선택 상품 구매하기"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="2dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:text="전체 상품 구매하기"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:background="@drawable/s_rect_rad_fill_red"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

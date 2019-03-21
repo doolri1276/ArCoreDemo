@@ -21,6 +21,7 @@ import kr.co.naulsnow.arcoredemo.singletons.FurnitureHelper;
 
 public class FurnitureItem {
 
+    private int furnitureCode;
     private int imageRid;
     private String imageUrl;
     private ViewRenderable viewRenderable;
@@ -49,6 +50,7 @@ public class FurnitureItem {
                 .build()
                 .thenAccept( renderable -> viewRenderable = renderable);
 
+        this.furnitureCode = furnitureItem.getFurnitureID();
         this.context = context;
         price = furnitureItem.getPrice();
         name=furnitureItem.getName();
@@ -175,6 +177,15 @@ public class FurnitureItem {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj instanceof FurnitureItem==false)
+            return false;
+
+        return this.furnitureCode==((FurnitureItem)obj).furnitureCode;
     }
 
     public interface OnDetachNode{

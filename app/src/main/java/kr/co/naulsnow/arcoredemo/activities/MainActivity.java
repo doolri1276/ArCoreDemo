@@ -26,6 +26,7 @@ import com.google.ar.sceneform.ux.BaseArFragment;
 
 import kr.co.naulsnow.arcoredemo.R;
 import kr.co.naulsnow.arcoredemo.adapters.FurnitureListAdapter;
+import kr.co.naulsnow.arcoredemo.dialogs.CartDialog;
 import kr.co.naulsnow.arcoredemo.models.FurnitureItem;
 import kr.co.naulsnow.arcoredemo.network.FurnitureApi;
 import kr.co.naulsnow.arcoredemo.network.NetworkManager;
@@ -192,6 +193,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ivCart.setOnClickListener(v ->
+            showCartDialog()
+        );
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,6 +216,12 @@ public class MainActivity extends AppCompatActivity {
             });
             rvChairs.setAdapter(furnitureListAdapter);
         }
+    }
+
+    private void showCartDialog(){
+        CartDialog dialog = new CartDialog();
+        dialog.setOnResult(() -> setCartNum());
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
     @Override
