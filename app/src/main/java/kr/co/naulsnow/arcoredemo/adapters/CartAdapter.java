@@ -85,6 +85,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     isSetting=false;
                 }
             });
+
+            ivRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FurnitureItem item = FurnitureHelper.getInstance().getCartFurnitureList().get(getLayoutPosition());
+                    item.getOnDetachNode().onDetach(getLayoutPosition());
+                    onClickItemInterface.onClick(getLayoutPosition(), false);
+//                    FurnitureHelper.getInstance().getCartFurnitureList().remove(getLayoutPosition());
+                    notifyItemRemoved(getLayoutPosition());
+                }
+            });
         }
     }
 

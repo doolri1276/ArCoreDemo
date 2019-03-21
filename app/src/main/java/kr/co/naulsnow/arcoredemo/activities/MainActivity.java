@@ -100,9 +100,10 @@ public class MainActivity extends AppCompatActivity {
 
                         FurnitureHelper.getInstance().getFurnitureList().add(new FurnitureItem(MainActivity.this, result.getFurnitureItemList().get(i), new FurnitureItem.OnDetachNode() {
                             @Override
-                            public void onDetach(int index, AnchorNode anchorNode) {
-                                anchorNode.setParent(null);
-                                FurnitureHelper.getInstance().getCartFurnitureList().remove(index);
+                            public void onDetach(int index) {
+                                FurnitureHelper.getInstance().getCartFurnitureList().get(index).getAnchorNode().setParent(null);
+                                if(index!=-1 && index<FurnitureHelper.getInstance().getCartFurnitureList().size())
+                                    FurnitureHelper.getInstance().getCartFurnitureList().remove(index);
                                 setCartNum();
                             }
                         }));

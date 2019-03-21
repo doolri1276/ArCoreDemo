@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import kr.co.naulsnow.arcoredemo.R;
 import kr.co.naulsnow.arcoredemo.adapters.CartAdapter;
+import kr.co.naulsnow.arcoredemo.models.FurnitureItem;
 import kr.co.naulsnow.arcoredemo.singletons.FurnitureHelper;
 
 public class CartDialog extends DialogFragment {
@@ -22,6 +25,9 @@ public class CartDialog extends DialogFragment {
     //툴바
     ImageView ivCancel;
     TextView tvTopSum;
+
+    //전체 선택
+    CheckBox cbCheckAll;
 
     //장바구니 리스트
     RecyclerView rvFurnitures;
@@ -36,6 +42,7 @@ public class CartDialog extends DialogFragment {
 
     //데이터들
     int shippingSum;
+    boolean isSetting;
 
     @Nullable
     @Override
@@ -53,6 +60,9 @@ public class CartDialog extends DialogFragment {
         //툴바
         ivCancel = view.findViewById(R.id.iv_cancel);
         tvTopSum = view.findViewById(R.id.tv_top_sum);
+
+        //전체선택
+        cbCheckAll = view.findViewById(R.id.cb_check_all);
 
         //장바구니 리스트
         rvFurnitures = view.findViewById(R.id.rv_furnitures);
@@ -79,6 +89,22 @@ public class CartDialog extends DialogFragment {
             }
         });
 
+        cbCheckAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isSetting) return;
+                isSetting=true;
+
+                for(int i=0;i<FurnitureHelper.getInstance().getCartFurnitureList().size();i++){
+                    FurnitureHelper.getInstance().getCartFurnitureList().get(i).setSelected(isChecked);
+                }
+
+                isSetting=false;
+                adapter.notifyDataSetChanged();
+                setData();
+            }
+        });
+
     }
 
     private void setAppBar() {
@@ -97,14 +123,31 @@ public class CartDialog extends DialogFragment {
     }
 
     private void setData() {
+
+        isSetting=true;
+
         //툴바
         tvTopSum.setText(FurnitureHelper.getInstance().getSelectedSum()+"원");
+
+        //전체선택
+        boolean isCheckedAll = true;
+        for(int i=0;i<FurnitureHelper.getInstance().getCartFurnitureList().size();i++){
+            FurnitureItem item = FurnitureHelper.getInstance().getCartFurnitureList().get(i);
+
+            if(!item.isSelected()){
+                isCheckedAll=false;
+                break;
+            }
+        }
+        cbCheckAll.setChecked(isCheckedAll);
 
         //결과
         tvFurnitureSum.setText(FurnitureHelper.getInstance().getSelectedSum()+"원");
         shippingSum = FurnitureHelper.getInstance().getCartFurnitureList().size()>0 && FurnitureHelper.getInstance().getSelectedSum()>100000?0:3000;
         tvShippingSum.setText(shippingSum+"원");
         tvSum.setText((FurnitureHelper.getInstance().getSelectedSum()+shippingSum)+"원");
+
+        isSetting=false;
 
     }
 

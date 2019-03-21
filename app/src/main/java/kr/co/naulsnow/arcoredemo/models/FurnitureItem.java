@@ -30,7 +30,8 @@ public class FurnitureItem implements Cloneable{
     private Context context;
     private boolean isSelected = false;
 
-    OnDetachNode onDetachNode;
+    private AnchorNode anchorNode;
+    private OnDetachNode onDetachNode;
 
     public FurnitureItem(Context context, FurnitureResult.FurnitureItem furnitureItem, OnDetachNode onDetachNode){
         imageUrl=furnitureItem.getImageUrl();
@@ -125,7 +126,9 @@ public class FurnitureItem implements Cloneable{
 
 
 
-    public void createModel(AnchorNode anchorNode, TransformationSystem transformationSystem){
+    public void createModel(AnchorNode anchorNodee, TransformationSystem transformationSystem){
+
+        this.anchorNode=anchorNodee;
 
         try {
             FurnitureHelper.getInstance().getCartFurnitureList().add((FurnitureItem) this.clone());
@@ -157,7 +160,7 @@ public class FurnitureItem implements Cloneable{
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDetachNode.onDetach(FurnitureHelper.getInstance().getCartFurnitureList().indexOf(FurnitureItem.this), anchorNode);
+                onDetachNode.onDetach(FurnitureHelper.getInstance().getCartFurnitureList().indexOf(FurnitureItem.this));
 //                anchorNode.setParent(null);
             }
         });
@@ -165,6 +168,10 @@ public class FurnitureItem implements Cloneable{
         tvName.setText(name);
         tvPrice.setText(price+"원");
 
+    }
+
+    public OnDetachNode getOnDetachNode() {
+        return onDetachNode;
     }
 
     public int getImageRid() {
@@ -206,8 +213,10 @@ public class FurnitureItem implements Cloneable{
     }
 
     public interface OnDetachNode{
-        void onDetach(int index, AnchorNode anchorNode);
+        void onDetach(int index);
     }
 
-
+    public AnchorNode getAnchorNode() {
+        return anchorNode;
+    }
 }

@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
+                    android:id="@+id/cb_check_all"
                     android:layout_width="wrap_content"
                     android:text=""
                     android:layout_height="wrap_content"
