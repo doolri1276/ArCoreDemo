@@ -45,6 +45,7 @@
                 android:text="선택된 결재 금액"/>
 
             <TextView
+                android:id="@+id/tv_top_sum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#333333"
@@ -67,22 +68,191 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/item_cart"/>
-            <include layout="@layout/item_cart"/>
-            <include layout="@layout/item_cart"/>
-            <include layout="@layout/item_cart"/>
-            <include layout="@layout/item_cart"/>
-            <include layout="@layout/item_cart"/>
-            <include layout="@layout/item_cart"/>
-            <include layout="@layout/item_cart"/>
-            <include layout="@layout/item_cart"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:text=""
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전체 선택"
+                    android:textColor="#333333"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="4dp"/>
+
+
+
+
+
+
+
+            </LinearLayout>
+
+            <include layout="@layout/item_cart"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+            <!--<include layout="@layout/item_cart"/>-->
+            <!--<include layout="@layout/item_cart"/>-->
+            <!--<include layout="@layout/item_cart"/>-->
+            <!--<include layout="@layout/item_cart"/>-->
+            <!--<include layout="@layout/item_cart"/>-->
+            <!--<include layout="@layout/item_cart"/>-->
+            <!--<include layout="@layout/item_cart"/>-->
+            <!--<include layout="@layout/item_cart"/>-->
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_furnitures"
                 android:layout_width="match_parent"
                 tools:listitem="@layout/item_cart"
+                android:visibility="visible"
+                tools:visibility="gone"
                 android:layout_height="wrap_content">
 
             </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:background="#dddddd"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:padding="14dp"
+                android:background="#ffffff"
+                android:layout_height="wrap_content">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TableRow
+                        android:minHeight="25dp"
+                        android:gravity="center_vertical"
+                        >
+                        <TextView
+                            android:text="상품 가격"
+                            android:textColor="#666666"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:id="@+id/tv_furniture_sum"
+                            android:text="44,658원"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:textColor="#333333"
+                            android:textSize="12sp"/>
+                    </TableRow>
+                    <TableRow
+                        android:minHeight="25dp"
+                        android:gravity="center_vertical"
+                        >
+                        <TextView
+                            android:text="상품 할인"
+                            android:textColor="#666666"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:id="@+id/tv_discount_sum"
+                            android:text="0원"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:textColor="#333333"
+                            android:textSize="12sp"/>
+                    </TableRow>
+                    <TableRow
+                        android:minHeight="25dp"
+                        android:gravity="center_vertical"
+                        >
+                        <TextView
+                            android:text="쿠폰 할인"
+                            android:textColor="#666666"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:id="@+id/tv_coupon_sum"
+                            android:text="0원"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:textColor="#333333"
+                            android:textSize="12sp"/>
+                    </TableRow>
+                    <TableRow
+                        android:minHeight="25dp"
+                        android:gravity="center_vertical"
+                        >
+                        <TextView
+                            android:text="배송비 (10만원 이상 무료)"
+                            android:textColor="#666666"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:id="@+id/tv_shipping_sum"
+                            android:text="44,658원"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:textColor="#333333"
+                            android:textSize="12sp"/>
+                    </TableRow>
+
+
+                </TableLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#dddddd"
+                    android:layout_marginTop="14dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingTop="14dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    android:paddingBottom="3dp"
+                    android:paddingRight="12dp"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_card"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="합계"
+                        android:textSize="12sp"
+                        android:textColor="#333333"
+                        android:layout_marginLeft="15dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_sum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#EA4639"
+                        android:text="41,250,200원"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#dddddd"/>
 
         </LinearLayout>
 
@@ -97,6 +267,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/tv_purchase_selected"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -115,6 +286,7 @@
             />
 
         <TextView
+            android:id="@+id/tv_purchase_all"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"

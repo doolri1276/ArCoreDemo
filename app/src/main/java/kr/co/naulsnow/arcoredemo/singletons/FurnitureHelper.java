@@ -15,14 +15,14 @@ public class FurnitureHelper {
 
 
     private List<FurnitureItem> furnitureList;
-    private List<FurnitureItem> selectedFurnitureList;
+    private List<FurnitureItem> cartFurnitureList;
 
 
 
 
     public FurnitureHelper() {
         furnitureList = new ArrayList<>();
-        selectedFurnitureList = new ArrayList<>();
+        cartFurnitureList = new ArrayList<>();
     }
 
 
@@ -34,7 +34,27 @@ public class FurnitureHelper {
         this.furnitureList = furnitureList;
     }
 
-    public List<FurnitureItem> getSelectedFurnitureList() {
-        return selectedFurnitureList;
+    public List<FurnitureItem> getCartFurnitureList() {
+        return cartFurnitureList;
+    }
+
+    public int getCartSum(){
+        int sum=0;
+
+        for(int i = 0; i< cartFurnitureList.size(); i++){
+            sum+= cartFurnitureList.get(i).getPrice();
+        }
+        return sum;
+    }
+
+    public int getSelectedSum(){
+        int sum=0;
+
+        for(int i=0;i<cartFurnitureList.size();i++){
+            if(cartFurnitureList.get(i).isSelected()){
+                sum+=cartFurnitureList.get(i).getPrice();
+            }
+        }
+        return sum;
     }
 }

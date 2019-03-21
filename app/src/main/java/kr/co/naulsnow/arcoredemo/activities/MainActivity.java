@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDetach(int index, AnchorNode anchorNode) {
                                 anchorNode.setParent(null);
-                                FurnitureHelper.getInstance().getSelectedFurnitureList().remove(index);
+                                FurnitureHelper.getInstance().getCartFurnitureList().remove(index);
                                 setCartNum();
                             }
                         }));
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setCartNum(){
-        int num = FurnitureHelper.getInstance().getSelectedFurnitureList().size();
+        int num = FurnitureHelper.getInstance().getCartFurnitureList().size();
         tvCartNum.setText(num+"");
 
         if(num==0){

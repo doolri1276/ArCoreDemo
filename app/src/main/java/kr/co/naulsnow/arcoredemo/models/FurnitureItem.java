@@ -11,7 +11,6 @@ import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
-import com.google.ar.sceneform.ux.FootprintSelectionVisualizer;
 import com.google.ar.sceneform.ux.TransformableNode;
 import com.google.ar.sceneform.ux.TransformationSystem;
 
@@ -29,6 +28,7 @@ public class FurnitureItem {
     private int price;
     private String name;
     private Context context;
+    private boolean isSelected = false;
 
     OnDetachNode onDetachNode;
 
@@ -127,7 +127,7 @@ public class FurnitureItem {
 
     public void createModel(AnchorNode anchorNode, TransformationSystem transformationSystem){
 
-        FurnitureHelper.getInstance().getSelectedFurnitureList().add(this);
+        FurnitureHelper.getInstance().getCartFurnitureList().add(this);
 
         TransformableNode transformableNode = new TransformableNode(transformationSystem);
 //        TransformationSystem transformationSystem1 = new TransformationSystem(context.getResources().getDisplayMetrics(), new FootprintSelectionVisualizer());
@@ -153,7 +153,7 @@ public class FurnitureItem {
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDetachNode.onDetach(FurnitureHelper.getInstance().getSelectedFurnitureList().indexOf(FurnitureItem.this), anchorNode);
+                onDetachNode.onDetach(FurnitureHelper.getInstance().getCartFurnitureList().indexOf(FurnitureItem.this), anchorNode);
 //                anchorNode.setParent(null);
             }
         });
@@ -177,6 +177,10 @@ public class FurnitureItem {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 
     @Override
