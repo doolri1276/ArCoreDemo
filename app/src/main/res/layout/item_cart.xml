@@ -11,6 +11,7 @@
         android:layout_height="wrap_content">
 
         <CheckBox
+            android:id="@+id/cb_selected"
             android:layout_width="wrap_content"
             android:text=""
             android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
             android:layout_marginLeft="4dp"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/iv_preview"
                 android:layout_width="50dp"
                 android:src="@drawable/fur01"
                 android:scaleType="centerCrop"
@@ -37,6 +39,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="고양이는 항상 귀여워"
@@ -44,6 +47,7 @@
                 android:textSize="10sp"/>
 
             <TextView
+                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#333333"
@@ -82,6 +86,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/iv_remove"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_cart_cancel"

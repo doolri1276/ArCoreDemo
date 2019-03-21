@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import kr.co.naulsnow.arcoredemo.R;
+import kr.co.naulsnow.arcoredemo.adapters.CartAdapter;
 import kr.co.naulsnow.arcoredemo.singletons.FurnitureHelper;
 
 public class CartDialog extends DialogFragment {
@@ -24,6 +25,7 @@ public class CartDialog extends DialogFragment {
 
     //장바구니 리스트
     RecyclerView rvFurnitures;
+    CartAdapter adapter;
 
     //구매
     TextView tvPurchaseSelected, tvPurchaseAll;
@@ -32,6 +34,8 @@ public class CartDialog extends DialogFragment {
     TextView tvFurnitureSum, tvDiscountSum, tvCouponSum, tvShippingSum, tvSum;
 
 
+    //데이터들
+    int shippingSum;
 
     @Nullable
     @Override
@@ -40,6 +44,7 @@ public class CartDialog extends DialogFragment {
         setViews(view);
         setListeners();
         setAppBar();
+        setAdapter();
         setData();
         return view;
     }
@@ -80,13 +85,26 @@ public class CartDialog extends DialogFragment {
 
     }
 
+    private void setAdapter(){
+        adapter = new CartAdapter(getContext(), new CartAdapter.OnClickItemInterface() {
+            @Override
+            public void onClick(int num, boolean selected) {
+                setData();
+            }
+        });
+        rvFurnitures.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
     private void setData() {
         //툴바
         tvTopSum.setText(FurnitureHelper.getInstance().getSelectedSum()+"원");
 
         //결과
         tvFurnitureSum.setText(FurnitureHelper.getInstance().getSelectedSum()+"원");
-        tvSum.setText(FurnitureHelper.getInstance().getSelectedSum());
+        shippingSum = FurnitureHelper.getInstance().getCartFurnitureList().size()>0 && FurnitureHelper.getInstance().getSelectedSum()>100000?0:3000;
+        tvShippingSum.setText(shippingSum+"원");
+        tvSum.setText((FurnitureHelper.getInstance().getSelectedSum()+shippingSum)+"원");
 
     }
 

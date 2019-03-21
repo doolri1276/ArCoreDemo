@@ -18,7 +18,7 @@ import kr.co.naulsnow.arcoredemo.R;
 import kr.co.naulsnow.arcoredemo.result.FurnitureResult;
 import kr.co.naulsnow.arcoredemo.singletons.FurnitureHelper;
 
-public class FurnitureItem {
+public class FurnitureItem implements Cloneable{
 
     private int furnitureCode;
     private int imageRid;
@@ -127,7 +127,11 @@ public class FurnitureItem {
 
     public void createModel(AnchorNode anchorNode, TransformationSystem transformationSystem){
 
-        FurnitureHelper.getInstance().getCartFurnitureList().add(this);
+        try {
+            FurnitureHelper.getInstance().getCartFurnitureList().add((FurnitureItem) this.clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
 
         TransformableNode transformableNode = new TransformableNode(transformationSystem);
 //        TransformationSystem transformationSystem1 = new TransformationSystem(context.getResources().getDisplayMetrics(), new FootprintSelectionVisualizer());
@@ -183,6 +187,10 @@ public class FurnitureItem {
         return isSelected;
     }
 
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     @Override
     public boolean equals(Object obj) {
 
@@ -192,7 +200,14 @@ public class FurnitureItem {
         return this.furnitureCode==((FurnitureItem)obj).furnitureCode;
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public interface OnDetachNode{
         void onDetach(int index, AnchorNode anchorNode);
     }
+
+
 }

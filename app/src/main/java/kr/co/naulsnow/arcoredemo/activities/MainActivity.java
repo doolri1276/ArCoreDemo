@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
     private void showCartDialog(){
         CartDialog dialog = new CartDialog();
         dialog.setOnResult(() -> setCartNum());
+        dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
