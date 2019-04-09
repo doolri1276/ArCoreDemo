@@ -57,4 +57,13 @@ public class FurnitureHelper {
         }
         return sum;
     }
+
+    public int getAllSum(){
+        int sum=0;
+
+        for(int i=0;i<cartFurnitureList.size();i++){
+                sum+=cartFurnitureList.get(i).getPrice();
+        }
+        return sum;
+    }
 }

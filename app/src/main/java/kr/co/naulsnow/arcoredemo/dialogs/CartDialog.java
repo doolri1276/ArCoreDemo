@@ -37,7 +37,7 @@ public class CartDialog extends DialogFragment {
     TextView tvPurchaseSelected, tvPurchaseAll;
 
     //결과
-    TextView tvFurnitureSum, tvDiscountSum, tvCouponSum, tvShippingSum, tvSum;
+    TextView tvFurnitureAllSum, tvFurnitureSum, tvDiscountSum, tvCouponSum, tvShippingSum, tvSum;
 
 
     //데이터들
@@ -73,6 +73,7 @@ public class CartDialog extends DialogFragment {
 
         //결과
         tvFurnitureSum = view.findViewById(R.id.tv_furniture_sum);
+        tvFurnitureAllSum = view.findViewById(R.id.tv_furniture_all_sum);
         tvDiscountSum = view.findViewById(R.id.tv_discount_sum);
         tvCouponSum = view.findViewById(R.id.tv_coupon_sum);
         tvShippingSum = view.findViewById(R.id.tv_shipping_sum);
@@ -143,6 +144,7 @@ public class CartDialog extends DialogFragment {
 
         //결과
         tvFurnitureSum.setText(FurnitureHelper.getInstance().getSelectedSum()+"원");
+        tvFurnitureAllSum.setText(FurnitureHelper.getInstance().getAllSum()+"원");
         shippingSum = FurnitureHelper.getInstance().getCartFurnitureList().size()>0 && FurnitureHelper.getInstance().getSelectedSum()>100000?0:3000;
         tvShippingSum.setText(shippingSum+"원");
         tvSum.setText((FurnitureHelper.getInstance().getSelectedSum()+shippingSum)+"원");

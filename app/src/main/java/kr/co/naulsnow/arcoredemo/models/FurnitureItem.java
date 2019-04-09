@@ -131,6 +131,7 @@ public class FurnitureItem implements Cloneable{
         this.anchorNode=anchorNodee;
 
         try {
+            isSelected=true;
             FurnitureHelper.getInstance().getCartFurnitureList().add((FurnitureItem) this.clone());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
